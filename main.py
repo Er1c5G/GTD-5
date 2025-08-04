@@ -181,6 +181,9 @@ def main():
 
     # sitesFileStatus = { "sites" : _sitesFileStatus }
 
+
+    print(f"Files to be processed : {len(filesToBeProcessed)}")
+
     if len(filesToBeProcessed) > 0:
 
         tcuList.sort()
