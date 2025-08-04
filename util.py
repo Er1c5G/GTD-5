@@ -1,4 +1,4 @@
-from jinja2 import Template
+# from jinja2 import Template
 import smtplib
 import ssl
 from email.mime.text import MIMEText
