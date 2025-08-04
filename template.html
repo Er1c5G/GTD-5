@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <style></style>
+    </head>
+    <body>
+    {% for site in sites %}
+        <div><b>{{site.name}}</b> | Recevied:{{site.dataReceived}} | Calculated:{{site.dataCalculated}} | Remarks:{{site.remarks}}</div>
+        <br />
+    {% endfor %}
+    </body>
+</html>
