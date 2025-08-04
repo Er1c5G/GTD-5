@@ -44,8 +44,6 @@ rawFilesDir = "raw_files"
 
 print(os.listdir(rawFilesDir))
 
-exit()
-
 # List all files to be processed
 filesGeneratedFewDaysAgo = find_files_created_days_ago(rawFilesDir, daysAgo)
 
@@ -175,6 +173,7 @@ def main():
                 logSiteStatus(_sitesFileStatus, site, True, True, fileSize, "Incomplete File, no `RANGE PROCESSING COMPLETE` found")
                 
         except Exception:
+            print("ERROR")
             f = open('error.log', 'w')
             f.write('An exceptional thing happed during opening '+ site +' - %s' % e)
             f.close()
