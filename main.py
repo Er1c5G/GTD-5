@@ -119,6 +119,8 @@ def main():
 
     filesToBeProcessed = []
 
+    print(filesGeneratedFewDaysAgo)
+
     # Filters files based in the predefined sites to be processed in a certain week and day, see siteGroup
     for filePath in filesGeneratedFewDaysAgo:
         for site in sites:
