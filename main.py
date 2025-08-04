@@ -28,7 +28,7 @@ if weekday == 1:
 if weekday == 2:
     print("Today is Monday, will process GTD5 files generated on last Sunday")
 
-daysAgo = 2
+daysAgo = 1
 
 # Process files generated a day ago 
 [dayToBeProcess, weekToBeProcess] = getDayAndWeek(now - datetime.timedelta(days=daysAgo))
