@@ -1,5 +1,6 @@
 from jinja2 import Template
 import smtplib
+import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import xlsxwriter # type: ignore
@@ -33,54 +34,43 @@ def remap_weekday(weekday):
     else:
         return None
 
-def emailReport(sitesStatus, sessionDate):
-
-    now = datetime.datetime.now()
-
-    # Define email server and credentials
-    smtpServer = os.environ.get('SMTP_SERVER')
-    smtpPort = os.environ.get('SMTP_PORT')
-    senderEmail = os.environ.get('MAILER_EMAIL')
-    senderPassword = os.environ.get('MAILER_PWD')
-
-    emailRecipients = os.environ.get('EMAIL_TO')
-
-    # Set up email server
-    server = smtplib.SMTP(smtpServer, smtpPort)
-    server.starttls()
-    server.login(senderEmail, senderPassword)
-
-    # Read the email template
-    with open("template.html", "r") as file:
-        template_str = file.read()
-
-    emailContent = jinjaTemplate.render(sitesStatus)
-
-    # Create the email message
-    msg = MIMEMultipart()
-    msg["From"] = senderEmail
-    msg["To"] = emailRecipients
-
-
-    weekday = remap_weekday(now.weekday())
-
-    weekDays = {
-        "1" : "Sunday",
-        "7" : "Saturday"
-    }
-
-    msg["Subject"] = weekDays[weekday] + " "  + "GTD5 Customer Count Process Result (" + sessionDate  + ")"
-
-    # Attach the HTML content to the email
-    msg.attach(MIMEText(emailContent, "html"))
-
-    # Print and send the email
-    # print(f"Sending email to {emailRecipients}:\n{email_content}\n\n")
-
-    server.sendmail(senderEmail, emailRecipients, msg.as_string())
-
-    server.quit()
-
+def sendEmail(subject:str, bodyText:str, recipient:str, cc:list[str], fromEmail="eric.sangabriel@telus.com"):
+    
+    # Create message container
+    message = MIMEMultipart()
+    message['From'] = fromEmail
+    message['To'] = recipient
+    message['Cc'] = ", ".join(cc) 
+    # message['Bcc'] = ", ".join(bcc_recipients)  # Uncommented in original
+    # message['Reply-To'] = recipient
+    message['Subject'] = subject
+    
+    message.attach(MIMEText(bodyText, 'plain'))
+    
+    try:
+        # Save original SSL verification setting
+        original_ssl_verify = ssl._create_default_https_context
+        
+        # Disable SSL certificate verification (equivalent to rejectUnauthorized: false)
+        ssl._create_default_https_context = ssl._create_unverified_context
+        
+        # Create SMTP connection
+        with smtplib.SMTP('142.178.52.177', 25) as smtp:
+            # Start TLS (secure=false in original, but we still need to start TLS)
+            smtp.starttls()
+            
+            # Send email
+            smtp.send_message(message)
+            
+            print("Report Email Sent")
+    
+    except Exception as error:
+        print(error)
+        ssl._create_default_https_context = original_ssl_verify
+        raise Exception(f"Sending email failed: {str(error)}")
+    
+    finally:
+        ssl._create_default_https_context = original_ssl_verify
 
 def generatedExcelFile(result, sessionDate):
     workbook = xlsxwriter.Workbook("output/CustomerCount_DataSheet_" + sessionDate + ".xlsx")
@@ -170,7 +160,7 @@ def check_file_creation_date(file_path, start_of_day, end_of_day):
     try:
         # Get file creation time (ctime on Windows, birthtime on some Unix systems)
         # Note: On some Unix systems, this might return the metadata change time instead
-        creation_time = os.path.getctime(file_path)
+        creation_time = os.path.getmtime(file_path)
         creation_datetime = datetime.datetime.fromtimestamp(creation_time)
         
         # Check if the creation time is within the target day
