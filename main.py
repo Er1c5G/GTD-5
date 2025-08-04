@@ -3,9 +3,8 @@ import os
 import datetime
 import json
 
-from dotenv import load_dotenv
-
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 from util import generatedExcelFile, getDayAndWeek, sendEmail, remap_weekday, find_files_created_days_ago
 
@@ -41,7 +40,6 @@ daysAgo = 1
 #     print("Exited!. Current day is not saturday nor sunday")
 #     exit()
 
-
 rawFilesDir = "raw_files"
 
 # List all files to be processed
@@ -49,12 +47,9 @@ filesGeneratedFewDaysAgo = find_files_created_days_ago(rawFilesDir, daysAgo)
 
 groupKey = "w" + str(weekToBeProcess) + "_d" + str(dayToBeProcess) 
 
-# exit()
-
 print("Started...")
 
 print(f"Week and Day : {groupKey}")
-# TODO - Log code execution
 
 # Expected files to be process each week
 # These will be used to check against the files uploaded
@@ -186,37 +181,36 @@ def main():
 
     # sitesFileStatus = { "sites" : _sitesFileStatus }
 
-    tcuList.sort()
+    if len(filesToBeProcessed) > 0:
 
-    print("Processing counts...")
-    result = dict(zip(list(tcuList),[list(tcuList).count(i) for i in list(tcuList)]))
+        tcuList.sort()
 
-    # y = json.dumps(sitesFileStatus, indent=2)
-    # print(y)
+        print("Processing counts...")
+        result = dict(zip(list(tcuList),[list(tcuList).count(i) for i in list(tcuList)]))
 
-    # sitesFileStatus TODO - Log this
-    print("Generatin xlsx file...")
-    generatedExcelFile(result, sessionDate)
+        # y = json.dumps(sitesFileStatus, indent=2)
+        # print(y)
 
-    body = ""
-    for status in _sitesFileStatus:
-        site = status["name"]
-        remarks = status["remarks"]
-        fileSize = status["fileSize"]
+        # sitesFileStatus TODO - Log this
+        print("Generatin xlsx file...")
+        generatedExcelFile(result, sessionDate)
 
-        body = f"{body}\n\n{site} | {fileSize} |  {remarks}"
+        body = ""
+        for status in _sitesFileStatus:
+            site = status["name"]
+            remarks = status["remarks"]
+            fileSize = status["fileSize"]
 
-    print(f"Body : {body}")
+            body = f"{body}\n\n{site} | {fileSize} |  {remarks}"
 
-    emailReport(body=body, gtd5FileGenerationDay=dayToBeProcess, sessionDate=sessionDate)
-    # emailReport(sitesFileStatus, sessionDate)
+        print(f"Body : {body}")
+
+        emailReport(body=body, gtd5FileGenerationDay=dayToBeProcess, sessionDate=sessionDate)
 
     print("Done!")
 
 
 main()
-
-
 
 # TODO - Copy generated csv/xlsx to /devops/projects/Customer_Count/Voice/GTD5 dir?
 # TODO - Compress raw files and store the somewhere(maybe GDrive?), delete raw files after processing?
