@@ -123,11 +123,14 @@ def main():
     for filePath in filesGeneratedFewDaysAgo:
         for site in sites:
             if site in filePath:
+                print("site in path")
                 filesToBeProcessed.append({
                     "filePath": filePath,
                     "site" : site
                 })
                 break
+
+    print(f"Files to be processed : {len(filesToBeProcessed)}")
 
     for fileToBeProcessed in filesToBeProcessed:
 
@@ -190,7 +193,6 @@ def main():
     # sitesFileStatus = { "sites" : _sitesFileStatus }
 
 
-    print(f"Files to be processed : {len(filesToBeProcessed)}")
 
     if len(filesToBeProcessed) > 0:
 
