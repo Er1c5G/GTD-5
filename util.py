@@ -160,7 +160,7 @@ def check_file_creation_date(file_path, start_of_day, end_of_day):
     try:
         # Get file creation time (ctime on Windows, birthtime on some Unix systems)
         # Note: On some Unix systems, this might return the metadata change time instead
-        creation_time = os.path.getmtime(file_path)
+        creation_time = os.path.getctime(file_path)
         creation_datetime = datetime.datetime.fromtimestamp(creation_time)
         
         # Check if the creation time is within the target day
