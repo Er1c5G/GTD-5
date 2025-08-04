@@ -76,7 +76,9 @@ fileList = os.listdir(rawFilesDir)
 _sitesFileStatus = []
 
 # sites = sitesGroups["w3_d1"] 
-sites = sitesGroups[groupKey] 
+sites = sitesGroups[groupKey]
+
+print(f"Sites : {sites}")
 
 def logSiteStatus(sList:list, f:str, dr:bool, dc:bool, fs, r=""):
     sList.append({
