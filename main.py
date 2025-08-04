@@ -42,6 +42,10 @@ daysAgo = 1
 
 rawFilesDir = "raw_files"
 
+print(os.listdir(rawFilesDir))
+
+exit()
+
 # List all files to be processed
 filesGeneratedFewDaysAgo = find_files_created_days_ago(rawFilesDir, daysAgo)
 
