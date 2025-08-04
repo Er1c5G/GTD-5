@@ -8,6 +8,8 @@ import os
 import datetime
 from math import ceil
 
+import time
+
 
 def get_week_of_month(dt):
     first_day = dt.replace(day=1)
@@ -168,3 +170,21 @@ def check_file_creation_date(file_path, start_of_day, end_of_day):
     except Exception as e:
         print(f"Error checking file {file_path}: {e}")
         return False
+    
+def get_recent_files(directory, days):
+  
+    recent_files = []
+    current_time = time.time()
+    cutoff_time = current_time - (days * 86400)  # 86400 seconds in a day
+
+    for root, _, files in os.walk(directory):
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            try:
+                creation_time = os.path.getctime(filepath)
+                if creation_time >= cutoff_time:
+                    recent_files.append(filepath)
+            except Exception as e:
+                print(f"Error accessing file {filepath}: {e}")
+
+    return recent_files

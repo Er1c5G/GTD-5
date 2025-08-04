@@ -6,7 +6,7 @@ import json
 # from dotenv import load_dotenv
 # load_dotenv()
 
-from util import generatedExcelFile, getDayAndWeek, sendEmail, remap_weekday, find_files_created_days_ago
+from util import generatedExcelFile, getDayAndWeek, sendEmail, remap_weekday, find_files_created_days_ago, get_recent_files
 
 now = datetime.datetime.now()
 sessionDate = now.strftime("%Y-%m-%d")
@@ -42,7 +42,11 @@ daysAgo = 1
 
 rawFilesDir = "raw_files"
 
-print(os.listdir(rawFilesDir))
+# print(os.listdir(rawFilesDir))
+
+print(get_recent_files(rawFilesDir, 2))
+
+exit() 
 
 # List all files to be processed
 filesGeneratedFewDaysAgo = find_files_created_days_ago(rawFilesDir, daysAgo)
