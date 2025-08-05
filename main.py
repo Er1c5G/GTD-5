@@ -112,6 +112,9 @@ def app(mode=0, group=None):
 
     print("Started...")
 
+    sessionDate = "2025-08-04"
+    # sessionDate = "2025-08-05"
+
     #Check if current day is Process day(Sunday or Monday), Sun = 1, Monday = 2
     if(weekday != 1 and weekday != 2):
         print("Exited!. Current day is not proceesing day(Sunday or Monday)")
@@ -127,6 +130,7 @@ def app(mode=0, group=None):
     daysAgo = 3
 
     rawFilesDir = "raw_files"
+    # rawFilesDir = "/var/sftp/resolve"
 
     # fileList = os.listdir(rawFilesDir)
 
@@ -254,6 +258,7 @@ def app(mode=0, group=None):
 
         # sitesFileStatus TODO - Log this
         print("Generating xlsx file...")
+        # generatedExcelFile(result, sessionDate, "/devops/projects/Customer_Count/Voice/GTD5/")
         generatedExcelFile(result, sessionDate)
 
         body = ""
