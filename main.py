@@ -124,7 +124,7 @@ def app(mode=0, group=None):
     if weekday == 2:
         print("Today is Monday, will process GTD5 files generated on last Sunday")
 
-    daysAgo = 3
+    daysAgo = 4
     
     rawFilesDir = "/var/sftp/resolve"
 
