@@ -101,12 +101,13 @@ def emailReport(body, gtd5FileGenerationDay, sessionDate):
 
     subject = f"[{day}] GTD5 Customer Count Process Result {sessionDate}"
 
-    subject = f"[TEST] {subject}"
+    # subject = f"[TEST] {subject}"
+    subject = f"{subject}"
 
-    recepient = "eric.sangabriel@telus.com"
-    cc = ["eric.sangabriel@telus.com"]
+    recepient = ""
+    cc = ["eric.sangabriel@telus.com, richard.friesen@telus.com"]
 
-    sendEmail(subject, body, recepient, cc)
+    sendEmail(subject, body, recepient, cc, "richard.friesen@telus.com")
 
 def app(mode=0, group=None):
 
