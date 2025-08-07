@@ -75,7 +75,12 @@ def sendEmail(subject:str, bodyText:str, recipient:str, cc:list, fromEmail="eric
         ssl._create_default_https_context = original_ssl_verify
 
 def generatedExcelFile(result, sessionDate, outputFolder="output/"):
-    workbook = xlsxwriter.Workbook(f"{outputFolder}CustomerCount_DataSheet_" + sessionDate + ".xlsx")
+
+    directory_path = "output/"
+
+    os.makedirs(directory_path, exist_ok=True)
+
+    workbook = xlsxwriter.Workbook(f"{directory_path}CustomerCount_DataSheet_" + sessionDate + ".xlsx")
     worksheet = workbook.add_worksheet()
 
     # generate xls file    
