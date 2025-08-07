@@ -36,7 +36,7 @@ def remap_weekday(weekday):
     else:
         return None
 
-def sendEmail(subject:str, bodyText:str, recipient:str, cc:list, fromEmail="eric.sangabriel@telus.com"):
+def sendEmail(subject:str, bodyText:str, recipient:str, cc:list, fromEmail="richard.friesen@telus.com"):
     
     # Create message container
     message = MIMEMultipart()
