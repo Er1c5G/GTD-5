@@ -113,7 +113,7 @@ def app(mode=0, group=None):
     print("Started...")
 
     #Check if current day is Process day(Sunday or Monday), Sun = 1, Monday = 2
-    if(weekday != 1 and weekday != 2):
+    if weekday != 1 and weekday != 2 and mode == 0:
         return print("Exited!. Current day is not processing day(Sunday or Monday)")
 
     # if now is sunday, process all file generated in the saturday(previous day)
@@ -156,8 +156,6 @@ def app(mode=0, group=None):
         "w4_d1" : ["DELTBC01DS1","KMLPBC01DS2","RCMDBC02DS2","SLAMBC01DS1","VCTABC03DS2","WHRKBC01DS2"], # week 4, Sun
     }
 
-    sites = sitesGroups[groupKey]
-    
     if mode == 1 and group and group in sitesGroups:
         print("===MANUAL MODE====")
         print(f"Group : {group}")
@@ -165,6 +163,12 @@ def app(mode=0, group=None):
         sites = sitesGroups[group]
         # option to set session date manually if triggered manually
         # sessionDate = "?"
+    
+    if not groupKey in sitesGroups:
+        return print("Exited!. Key not found")
+    
+    sites = sitesGroups[groupKey]
+
 
     print(f"Sites selected : {sites}")
 
