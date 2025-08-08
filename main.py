@@ -53,7 +53,8 @@ def emailReport(body, gtd5FileGenerationDay, sessionDate):
     subject = f"{subject}"
 
     recepient = ""
-    cc = ["eric.sangabriel@telus.com, richard.friesen@telus.com"]
+    # cc = ["eric.sangabriel@telus.com, richard.friesen@telus.com"]
+    cc = ["juan.andara@telus.com", "stephen.morin@telus.com", "javed.ahmed@telus.com", "david.laganiere@telus.com", "eric.sangabriel@telus.com, richard.friesen@telus.com, jayesh.amin@telus.com"]
 
     sendEmail(subject, body, recepient, cc, "richard.friesen@telus.com")
 
