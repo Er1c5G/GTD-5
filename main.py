@@ -88,8 +88,8 @@ def app(mode=0, group=None):
     if len(filesGeneratedFewDaysAgo) == 0:
         print("No new Resolve files detected")
 
-
-    [dayToBeProcess, weekToBeProcess] = getDayAndWeek(now - datetime.timedelta(days=daysAgo))
+    # This should get the the day and week of the day prior from the trigger date
+    [dayToBeProcess, weekToBeProcess] = getDayAndWeek(now - datetime.timedelta(days=1))
 
     groupKey = "w" + str(weekToBeProcess) + "_d" + str(dayToBeProcess) 
 
